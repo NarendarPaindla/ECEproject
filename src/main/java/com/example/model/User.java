@@ -1,7 +1,9 @@
 package com.example.model;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-
+import jakarta.validation.constraints.Email;
 @Entity @Table(name="users")
 public class User {
 
@@ -9,8 +11,14 @@ public class User {
     private Long id;
     @NotBlank
     private String fullName;
+
+    @Email @Column(unique=true,nullable=false)
     private String email;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @NotBlank
     private String password;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Role role;
     private Long  managerId;
     public User() { }

@@ -20,4 +20,18 @@ public class UserService {
         if (u.getRole()==null) u.setRole(Role.EMPLOYEE);
         return repo.save(u);
     }
+
+    public User update(Long id, User incoming){
+        User u = repo.findById(id).orElseThrow();
+        u.setFullName(incoming.getFullName());
+        u.setEmail(incoming.getEmail());
+        if (incoming.getPassword()!=null && !incoming.getPassword().isBlank()) u.setPassword(incoming.getPassword());
+        if (incoming.getRole()!=null) u.setRole(incoming.getRole());
+        u.setManagerId(incoming.getManagerId());
+        return repo.save(u);
+    }
+     public void delete(Long id){ 
+        repo.deleteById(id); 
+    }
+
 }
